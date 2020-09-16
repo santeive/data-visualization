@@ -8,6 +8,11 @@ const svg = canvas.append("svg")
     .attr('width', width)
     .attr('height', height);
 
+//Define the div or the tooltip
+let div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 //Parse JSON
 d3.json(api_url)
     .then(data => {
@@ -32,6 +37,14 @@ d3.json(api_url)
                 .duration(100)// in miliseconds
                 .style("opacity", 0.7)
                 console.log(d.properties.mag)
+
+                div.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+
+                div.html("<p>"+ d.properties.mag +"</p>")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY) + "px")
             })
             .on("mouseout", function(d, i, n){
                 d3.select(n[i])

@@ -1,0 +1,25 @@
+body{
+    margin: 10px;
+    padding: 0;
+    display: block;
+}
+
+svg{
+    background: #6d5f44;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: left;
+    width: 3px;
+    height: 3px;
+    padding: 2px;
+    font: 12px Helvetica, sans-serif;
+    background: rgb(255, 0, 0);
+    border: 0px;
+    border-radius:20px;
+}
+
+div.tooltip p{
+    color: aliceblue;
+}
