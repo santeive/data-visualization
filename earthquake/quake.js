@@ -2,7 +2,8 @@ const canvas = d3.select(".canva");
 
 let width = "100%";
 let height = "100%";
-const api_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+//const api_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+const api_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson"
 
 const svg = canvas.append("svg")
     .attr('width', width)
@@ -12,6 +13,11 @@ const svg = canvas.append("svg")
 let div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
+
+function timeStamptoDate(mTime){
+    var mDate = new Date(mTime);
+    return mDate.toLocaleDateString("es-MX");
+}
 
 //Parse JSON
 d3.json(api_url)
@@ -42,15 +48,20 @@ d3.json(api_url)
                     .duration(200)
                     .style("opacity", 0.9);
 
-                div.html("<p>"+ d.properties.mag +"</p>")
+                div.html("<p>Mag: "+ d.properties.mag +"</p>" + 
+                "<p>"+ timeStamptoDate(d.properties.time) +"</p>")
                 .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY) + "px")
+                .style("top", (d3.event.pageY - 10) + "px")
             })
             .on("mouseout", function(d, i, n){
                 d3.select(n[i])
                 .transition()
                 .duration(100)// in miliseconds
                 .style("opacity", 1)
+                
+                div.transition()
+                .duration(500)
+                .style("opacity", 0)
             })
             .attr("fill", (d,i) => d.properties.alert);
 });
